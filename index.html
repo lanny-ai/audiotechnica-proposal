@@ -510,6 +510,7 @@
   <ul>
     <li><a href="#problems">The Problem</a></li>
     <li><a href="#comparison">Comparison</a></li>
+    <li><a href="#rollout-guide">Rollout Guide</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#use-cases">Use Cases</a></li>
     <li><a href="#creative">Creative Edge</a></li>
@@ -648,6 +649,82 @@
       <div style="text-align:center"><span class="status"><span class="dot dot-amber"></span> Months</span></div>
       <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Weeks</span></div>
     </div>
+  </div>
+</section>
+
+<!-- ── ROLLOUT GUIDE ── -->
+<section id="rollout-guide">
+  <div class="section-label">Frontier Rollout Guide</div>
+  <h2>7 things that actually go wrong during a Microsoft AI rollout</h2>
+  <p class="lead">You're about to go live with Frontier AI agents inside D365. Here's what nobody mentions in the demo — and what to do about each one.</p>
+
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">1️⃣</div>
+      <div>
+        <h3>AI Can't Fix a Data Problem It Didn't Create</h3>
+        <p>Copilot's recommendations, opportunity scoring, and "next best action" suggestions all depend on data already being in the system. If your sales team isn't logging activities, updating close dates, or tracking conversations inside D365 — the AI has nothing to work with. You'll turn on Copilot and see opportunity scores of zero. Not because the AI is broken, but because nobody fed it anything.</p>
+        <div class="scenario">Before you turn on any AI features, audit your data hygiene. Pick three fields that matter most — close date, last activity date, and deal stage — and get those consistently populated first. AI on top of bad data gives you confident-sounding bad answers.</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">2️⃣</div>
+      <div>
+        <h3>The Wall Between Sales Hub and Customer Service Doesn't Disappear</h3>
+        <p>Sales Hub and Customer Service Hub (now Copilot Workspace) share the same Dataverse on paper. In practice, the people using them live in completely different worlds. A field rep works a £10,000 opportunity while inside sales processes the order through the ERP — and nobody tells the rep. Copilot doesn't automatically bridge this gap. It might suggest "no recent activity" on an opportunity that's already been won and fulfilled through the other system.</p>
+        <div class="scenario">Don't assume shared data means shared visibility. Build custom dashboards or Power Automate flows that actively notify reps when orders are processed against their accounts. This is workflow work, not AI work.</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">3️⃣</div>
+      <div>
+        <h3>The Mobile Experience Is Still Rough</h3>
+        <p>If your sales team lives on the road, they need the system in their pocket. The D365 Sales Hub mobile app exists, but it's widely considered clunky. Modifications that look great on desktop don't always translate. Your field team will default to Outlook and whatever spreadsheet they were using before — not because they're resistant to change, but because the tool doesn't meet them where they work.</p>
+        <div class="scenario">Test every workflow on mobile before you roll it out. If a critical step doesn't work on a phone screen, your field team won't do it. Voice-based input is the better path — Microsoft is building phone-based meeting debriefs that let reps dictate notes after customer visits. That's worth enabling early.</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">4️⃣</div>
+      <div>
+        <h3>Knowledge Base Auto-Creation Sounds Better Than It Works</h3>
+        <p>D365 has a feature where closing a support case can automatically generate a knowledge base article — the issue, the cause, the resolution steps. In theory, your support knowledge builds itself over time. In practice, the auto-creation from case closure has had reliability issues. You may find yourself manually creating articles from already-closed cases instead.</p>
+        <div class="scenario">Plan for a human review layer regardless. Even when auto-creation is working perfectly, someone should verify that generated articles are accurate before they go live — especially if you're planning to surface them to customers on your website or through a support bot.</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">5️⃣</div>
+      <div>
+        <h3>"90,000 Connection Points" Doesn't Mean 90,000 Useful Connections</h3>
+        <p>Frontier's massive connector ecosystem is real — thousands of pre-built connectors to other systems and data sources. But connectors aren't integrations. A connector means "we can technically talk to that system." An integration means "the data flows correctly, maps to the right fields, and triggers the right actions." Companies often hear "90,000 connectors" and assume their specific use case is covered.</p>
+        <div class="scenario">For every integration that matters, ask three questions: Does the connector exist? Does it map our specific data fields? Has anyone actually deployed this exact use case? If the answer to the third question is no, budget time for custom configuration.</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">6️⃣</div>
+      <div>
+        <h3>AI Agents Need a Champion, Not Just an IT Rollout</h3>
+        <p>Rolling out AI through your IT department — as a technical upgrade, announced via email, trained in a one-hour webinar — almost never drives adoption. People are already sceptical. They've seen AI hyped for two years. Some think it's a productivity tool. Others think it's a surveillance tool. Many think it's both. An IT-led rollout confirms the surveillance fear and does nothing to demonstrate the productivity value.</p>
+        <div class="scenario">Find one person in the business — ideally respected by the sales or service teams, not someone from IT — who genuinely uses the tools and can show real results. The best AI adoption happens when a peer says "this saved me two hours yesterday" — not when IT says "this is now mandatory."</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">7️⃣</div>
+      <div>
+        <h3>Microsoft's Incentive Is to Prove Their Platform</h3>
+        <p>When Microsoft offers to hand-hold your rollout or suggests making your company a case study, their goal is to demonstrate that their platform works. That's reasonable. But the success metrics they care about may not align with yours. Microsoft might consider it a success if you've activated Copilot across all modules and turned on three AI agents. You might consider it a success only if your field reps actually know when orders are processed against their opportunities.</p>
+        <div class="scenario">Define your own success criteria before the rollout begins. Write down three to five specific business outcomes you need. Share them with your Microsoft contact. Hold the rollout accountable to those outcomes — not to feature activation counts.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 2.5rem; padding: 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; text-align: center;">
+    <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 650px; margin: 0 auto;">None of this means the rollout will fail. Microsoft's tools are genuinely capable. But the companies that get the most out of them are the ones that go in with clear expectations, a data hygiene plan, and someone on the inside who owns the result — not just the technology. <strong style="color: var(--text);">Save this page. Check back in 90 days. See how many of these showed up.</strong></p>
   </div>
 </section>
 
