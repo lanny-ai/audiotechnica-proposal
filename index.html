@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSCortex — Bridging the Gap for Audio Technica</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-2: #1a1a26;
+    --border: #2a2a3a;
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.15);
+    --accent-2: #818cf8;
+    --green: #34d399;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --text: #e4e4eb;
+    --text-muted: #9393a8;
+    --text-dim: #6b6b80;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav .logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--accent-2);
+  }
+  nav .logo span { color: var(--text-muted); font-weight: 400; }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 800px; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent-2);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .highlight {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.8;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+  }
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-2);
+    margin-bottom: 0.75rem;
+  }
+  section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  section > p.lead {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PROBLEM CARDS ── */
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .problem-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .problem-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.25rem;
+  }
+  .problem-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .problem-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .problem-card .tag {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .tag-red { background: rgba(248,113,113,0.12); color: var(--red); }
+  .tag-amber { background: rgba(251,191,36,0.12); color: var(--amber); }
+
+  /* ── COMPARISON ── */
+  .comparison {
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .comparison-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    background: var(--surface-2);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-row:hover { background: var(--surface); }
+  .comparison-row .label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .comparison-row .sublabel {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-green { background: var(--green); box-shadow: 0 0 8px rgba(52,211,153,0.4); }
+  .dot-red { background: var(--red); box-shadow: 0 0 8px rgba(248,113,113,0.4); }
+  .dot-amber { background: var(--amber); box-shadow: 0 0 8px rgba(251,191,36,0.4); }
+
+  /* ── HOW IT WORKS ── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .how-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative;
+  }
+  .how-number {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--surface-2);
+    line-height: 1;
+  }
+  .how-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--accent-2);
+  }
+  .how-card p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  /* ── USE CASES ── */
+  .use-cases {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .use-case {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: border-color 0.3s;
+  }
+  .use-case:hover { border-color: var(--accent); }
+  .use-case-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .use-case h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .use-case p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .use-case .scenario {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--surface-2);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    border-left: 3px solid var(--accent);
+    font-style: italic;
+  }
+
+  /* ── ARCHITECTURE ── */
+  .arch-diagram {
+    margin-top: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .arch-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .arch-layer {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+  .arch-top {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+  }
+  .arch-mid {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .arch-connector {
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  .arch-bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .arch-bottom {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 2rem;
+  }
+  .cta-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  .cta-section p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 550px;
+    margin: 0 auto 2.5rem;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+  }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+  footer a { color: var(--accent-2); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .comparison-header, .comparison-row {
+      grid-template-columns: 1.5fr 1fr 1fr;
+      font-size: 0.75rem;
+    }
+    .arch-bottom-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">OSCortex <span>× Audio Technica</span></div>
+  <ul>
+    <li><a href="#problems">The Problem</a></li>
+    <li><a href="#comparison">Comparison</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#use-cases">Use Cases</a></li>
+    <li><a href="#contact">Next Steps</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Prepared for Audio Technica</div>
+    <h1>Your teams have the tools.<br>They're missing the <span class="highlight">intelligence layer</span>.</h1>
+    <p>Dynamics 365 holds your data. OSCortex makes it work — bridging Sales Hub, Customer Service, and ERP into one contextual AI layer your people actually use.</p>
+    <a href="#problems" class="hero-cta">See How ↓</a>
+  </div>
+</section>
+
+<!-- ── PROBLEMS ── -->
+<section id="problems">
+  <div class="section-label">The Challenge</div>
+  <h2>Six problems one platform can't solve alone</h2>
+  <p class="lead">These aren't Microsoft failures — they're architectural constraints of building AI on top of siloed business applications.</p>
+
+  <div class="problems-grid">
+    <div class="problem-card">
+      <div class="problem-icon">🧱</div>
+      <h3>The Brick Wall</h3>
+      <p>Sales Hub and Customer Service Hub access the same Dataverse but don't share context. Field reps can't see what inside sales is processing. Orders ship without pipeline visibility.</p>
+      <span class="tag tag-red">Revenue Risk</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📱</div>
+      <h3>Mobile Is an Afterthought</h3>
+      <p>Field reps live on phones, not desktops. The D365 mobile app is a mismatch of legacy and modern tech. If reps can't use it from the car, they won't use it at all.</p>
+      <span class="tag tag-red">Adoption Blocker</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🚫</div>
+      <h3>No Data, No AI</h3>
+      <p>Copilot features exist but can't function without structured data in the right fields. When reps resist data entry, the entire AI investment goes dark.</p>
+      <span class="tag tag-red">Critical Dependency</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🔀</div>
+      <h3>Multi-Reseller Blind Spots</h3>
+      <p>Three resellers quoting for one end customer. Dynamics ties opportunities to pricing and trade agreements, making parallel reseller tracking problematic.</p>
+      <span class="tag tag-amber">Complexity Gap</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🏛️</div>
+      <h3>IT Governance Bottleneck</h3>
+      <p>CRM changes go through ERP-grade approval processes. Marketing can't tweak an email flow without navigating mission-critical governance designed for financial systems.</p>
+      <span class="tag tag-amber">Speed Constraint</span>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📚</div>
+      <h3>Knowledge Base Friction</h3>
+      <p>KB articles should auto-generate from closed cases. In practice, it requires manual creation, review, and approval — a pipeline that compounds delay.</p>
+      <span class="tag tag-amber">Support Gap</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON ── -->
+<section id="comparison">
+  <div class="section-label">Side by Side</div>
+  <h2>Where OSCortex fills the gaps</h2>
+  <p class="lead">OSCortex doesn't replace Dynamics. It sits on top and gives your team the unified intelligence layer Microsoft's architecture can't provide.</p>
+
+  <div class="comparison">
+    <div class="comparison-header">
+      <div>Capability</div>
+      <div style="text-align:center">Microsoft D365</div>
+      <div style="text-align:center">OSCortex</div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Cross-silo account view</div>
+        <div class="sublabel">Sales + Service + ERP in one query</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-red"></span> Separate apps</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Unified</span></div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Voice-first interaction</div>
+        <div class="sublabel">Update CRM by speaking, not typing</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-red"></span> Not available</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Native</span></div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Works without perfect data</div>
+        <div class="sublabel">AI functions with incomplete records</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-red"></span> Requires fields</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Infers context</span></div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Workflow changes</div>
+        <div class="sublabel">Time from request to live automation</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-amber"></span> IT ticket</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Conversational</span></div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Institutional memory</div>
+        <div class="sublabel">Knowledge compounds automatically</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-amber"></span> Manual KB</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Continuous</span></div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Mobile field experience</div>
+        <div class="sublabel">Usable from the car after a client visit</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-red"></span> Poor app</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Any device</span></div>
+    </div>
+
+    <div class="comparison-row">
+      <div>
+        <div class="label">Time to deploy</div>
+        <div class="sublabel">From decision to live system</div>
+      </div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-amber"></span> Months</span></div>
+      <div style="text-align:center"><span class="status"><span class="dot dot-green"></span> Weeks</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARCHITECTURE ── -->
+<section>
+  <div class="section-label">Architecture</div>
+  <h2>Sits on top. Doesn't replace anything.</h2>
+  <p class="lead">OSCortex reads from your existing systems and gives every team member a single conversational interface to the entire business.</p>
+
+  <div class="arch-diagram">
+    <div class="arch-layers">
+      <div class="arch-layer arch-top">OSCortex — Conversational AI Layer</div>
+      <div class="arch-connector">↕ reads + writes</div>
+      <div class="arch-layer arch-mid">Unified Business Context & Memory</div>
+      <div class="arch-connector">↕ connects to</div>
+      <div class="arch-bottom-row">
+        <div class="arch-bottom">D365 Sales Hub</div>
+        <div class="arch-bottom">D365 Customer Service</div>
+        <div class="arch-bottom">D365 Finance & Ops</div>
+      </div>
+      <div class="arch-bottom-row" style="margin-top: 0.5rem;">
+        <div class="arch-bottom">Outlook / Teams</div>
+        <div class="arch-bottom">Website & Forms</div>
+        <div class="arch-bottom">Trade Show Data</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how">
+  <div class="section-label">How It Works</div>
+  <h2>From scattered systems to unified intelligence</h2>
+  <p class="lead">Three steps. No migration. No disruption to your existing Microsoft investment.</p>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-number">01</div>
+      <h3>Connect</h3>
+      <p>OSCortex connects to your Dataverse, email, and existing systems through standard APIs. No data migration required. Your D365 investment stays exactly as it is.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-number">02</div>
+      <h3>Learn</h3>
+      <p>The system builds contextual understanding of your accounts, relationships, and patterns. Every interaction compounds — the system gets smarter about your business every day.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-number">03</div>
+      <h3>Work</h3>
+      <p>Your team interacts with one intelligent layer instead of switching between apps. Voice, text, any device. The system handles CRM updates, surfaces insights, and automates follow-ups behind the scenes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── USE CASES ── -->
+<section id="use-cases">
+  <div class="section-label">In Practice</div>
+  <h2>What this looks like day-to-day</h2>
+  <p class="lead">Real scenarios based on how your teams actually work — not theoretical features.</p>
+
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">🚗</div>
+      <div>
+        <h3>Post-Visit Capture</h3>
+        <p>A field sales rep leaves a customer meeting. Instead of opening an app and filling forms, they speak naturally about what happened. OSCortex captures the notes, updates the opportunity, adjusts the close date, and logs the activity — all from a voice interaction in the car.</p>
+        <div class="scenario">"Just left Midwich. Good meeting with Sarah — they're moving forward on the mic package. Bump the close date to end of month and mark it at 75% confidence."</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">🔗</div>
+      <div>
+        <h3>Order-Pipeline Sync</h3>
+        <p>An inside sales agent processes an order. OSCortex recognises it matches an open opportunity being worked by a field rep and automatically notifies them. No more discovering a deal closed without your knowledge.</p>
+        <div class="scenario">"Heads up — Canford Audio just placed the Manchester University order you've been working. 22K confirmed. Your opportunity has been updated."</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">📊</div>
+      <div>
+        <h3>BDM Daily Dashboard</h3>
+        <p>The unified view Gary described: every customer interaction across sales, support, quotes, and orders — visible in one place. No Power BI build required. Just ask.</p>
+        <div class="scenario">"Show me everything that happened with my top 10 accounts this week — quotes, orders, support tickets, and any field activity."</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">🎪</div>
+      <div>
+        <h3>Trade Show Follow-Up</h3>
+        <p>Upload leads from ISE or Plasa. OSCortex runs the entire sequence — thank-you email within 24 hours, personal follow-up nudge at day 3, phone call reminder at day 7 — without building sequences in Sales Accelerator.</p>
+        <div class="scenario">"We picked up 45 leads at Plasa. Run the standard trade show follow-up. Assign UK leads to the regional reps, Benelux leads to the Benelux team."</div>
+      </div>
+    </div>
+
+    <div class="use-case">
+      <div class="use-case-icon">🧠</div>
+      <div>
+        <h3>Continuous Knowledge Base</h3>
+        <p>Every resolved support case automatically becomes institutional knowledge. No manual article creation, no approval queue. When a similar issue comes in, the system already knows the answer and drafts the response.</p>
+        <div class="scenario">"We resolved a camera troubleshooting case last month. A similar query just came in — here's the suggested response based on what worked before."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="contact">
+  <div class="section-label">Next Steps</div>
+  <h2>Ready to bridge the gap?</h2>
+  <p>No migration. No disruption. Just a conversation about what's possible when your team has one intelligent layer across everything.</p>
+  <div class="cta-buttons">
+    <a href="mailto:ben@aimomentumlabs.com?subject=OSCortex%20—%20Audio%20Technica%20Follow-Up" class="btn-primary">Book a Conversation →</a>
+    <a href="https://aimomentumlabs.com" class="btn-secondary">Learn More</a>
+  </div>
+</section>
+
+<footer>
+  <p>Prepared by <a href="https://aimomentumlabs.com">AI Momentum Labs</a> · Confidential · June 2026</p>
+</footer>
+
+</body>
+</html>
